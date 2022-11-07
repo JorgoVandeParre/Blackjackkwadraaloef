@@ -6,7 +6,114 @@
         xmlns:local="clr-namespace:Blackjackkwadraaloef"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Background="DarkRed">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox
+            Margin="10"
+            Name="DealerCards"
+            Grid.Row="0" Grid.Column="1"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="3"
+            IsReadOnly="True"
+            Background="Gray"
+            >
+        </TextBox>
+        <TextBox
+            Margin="10"
+            Name="PlayerCards"
+            Grid.Row="3" Grid.Column="1"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="3"
+            IsReadOnly="True"
+            Background="Gray"
+            >
+        </TextBox>
+        <TextBlock
+            Margin="10"
+            Grid.Row="0" Grid.Column="0"
+            FontSize="44"
+            >
+            Dealer
+        </TextBlock>
+        <TextBlock
+            Margin="10"
+            Grid.Row="4" Grid.Column="4"
+            FontSize="44"
+            >
+            Player
+        </TextBlock>
+        <Button
+            Margin="20"
+            Name="HitButton"
+            Grid.Row="2" Grid.Column="3" Click="HitButton_Click"
+            
+            >
+            Hit
+        </Button>
+        <Button
+            Margin="20"
+            Name="StandButton"
+            Grid.Row="2" Grid.Column="1" Click="StandButton_Click"
+            
+            >
+            Stand
+        </Button>
+        <Button
+            Margin="20"
+            Name="PlayButton"
+            Grid.Row="2" Grid.Column="2" Click="PlayButton_Click"
+           
+            >
+            Play
+        </Button>
+        <Button
+            Margin="20"
+            Name="SplitButton"
+            Grid.Row="3" Grid.Column="0"
+            
+            >
+            Split
+        </Button>
+        <Button
+            Margin="20"
+            Name="DoubleButton"
+            Grid.Row="4" Grid.Column="0"
+            >
+            Double Down
+        </Button>
+        <TextBlock
+            Margin="10"
+            Name="DealerScore"
+            Grid.Row="1" Grid.Column="0"
+            FontSize="44"
+            HorizontalAlignment="Center"
+            >
+            0
+        </TextBlock>
+        <TextBlock
+            Margin="10"
+            Name="PlayerScore"
+            Grid.Row="3" Grid.Column="4"
+            FontSize="44"
+            HorizontalAlignment="Center"
+            >
+            0
+        </TextBlock>
+
+
+
     </Grid>
 </Window>

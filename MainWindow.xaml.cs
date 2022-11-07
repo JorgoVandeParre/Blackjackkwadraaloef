@@ -24,5 +24,20 @@ namespace Blackjackkwadraaloef
         {
             InitializeComponent();
         }
+
+        private void HitButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StandButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
