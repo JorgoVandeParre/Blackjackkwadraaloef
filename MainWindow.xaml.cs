@@ -74,6 +74,7 @@ namespace Blackjackkwadraaloef
             Checkaceplayer();
             Checkacedealer();
             playercardvalue = playercardvalue1 + playercardvalue2;
+            dealercardvalue = dealercardvalue1;
             PlayerScore.Text = Convert.ToString(playercardvalue);
             PlayerCards.Text = $"{playercard1}\n{playercard2}";
             DealerScore.Text = Convert.ToString(dealercardvalue1);
@@ -121,9 +122,9 @@ namespace Blackjackkwadraaloef
             }
             
         }
+        Random rnd = new Random();
         private string Randomcard(out int Cardvalue)
         {
-            Random rnd = new Random();
             int getal = rnd.Next(1, 5);
 
             string CardSuit = "empty";
@@ -146,7 +147,7 @@ namespace Blackjackkwadraaloef
 
             Cardvalue = 0;
             string name = "";
-            int random1 = rnd.Next(1, 14);
+            int random1 = rnd.Next(1, 13);
 
             switch (random1)
             {
@@ -163,7 +164,7 @@ namespace Blackjackkwadraaloef
                     Cardvalue = 10;
                     break;
                 case 12:
-                    name = "King of";
+                    name = "King of ";
                     Cardvalue = 10;
                     break;
                 case 2:
