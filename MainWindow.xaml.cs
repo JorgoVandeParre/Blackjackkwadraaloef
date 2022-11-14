@@ -32,7 +32,9 @@ namespace Blackjackkwadraaloef
         string playercard1;
         string playercard2;
         string dealercard1;
-
+        string name;
+        Random rnd = new Random();
+        bool isplayer = true;
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
             int playercardvalue1;
@@ -41,7 +43,7 @@ namespace Blackjackkwadraaloef
             PlayerScore.Text = Convert.ToString(playercardvalue);
             PlayerCards.Text += $"\n{playercard1}";
 
-            Checkaceplayer();
+            //Checkaceplayer();
 
             if (playercardvalue > 21)
             {
@@ -71,8 +73,8 @@ namespace Blackjackkwadraaloef
             playercard1 = Randomcard(out playercardvalue1);
             playercard2 = Randomcard(out playercardvalue2);
             dealercard1 = Randomcard(out dealercardvalue1);
-            Checkaceplayer();
-            Checkacedealer();
+            //Checkaceplayer();
+            //Checkacedealer();
             playercardvalue = playercardvalue1 + playercardvalue2;
             dealercardvalue = dealercardvalue1;
             PlayerScore.Text = Convert.ToString(playercardvalue);
@@ -94,7 +96,7 @@ namespace Blackjackkwadraaloef
 
             } while (dealercardvalue <= 17);
 
-            Checkacedealer();
+            //Checkacedealer();
 
             if (dealercardvalue == 21 && playercardvalue == 21)
             {
@@ -122,7 +124,6 @@ namespace Blackjackkwadraaloef
             }
             
         }
-        Random rnd = new Random();
         private string Randomcard(out int Cardvalue)
         {
             int getal = rnd.Next(1, 5);
@@ -146,14 +147,14 @@ namespace Blackjackkwadraaloef
             }
 
             Cardvalue = 0;
-            string name = "";
+            name = "";
             int random1 = rnd.Next(1, 13);
 
             switch (random1)
             {
                 case 1:
                     name = "Ace of ";
-                    Cardvalue = 11;
+                    Cardvalue = 1;
                     break;
                 case 10:
                     name = "Jack of ";
@@ -235,25 +236,40 @@ namespace Blackjackkwadraaloef
             DoubleButton.Visibility = Visibility.Collapsed;
             PlayButton.Visibility = Visibility.Visible;
         }
-        private void Checkaceplayer()
-        {
-            if (playercardvalue > 21)
-            {
-                if (playercard1 == "Ace of " || playercard2 == "Ace of ")
-                {
-                    playercardvalue -= 10;
-                    PlayerScore.Text = Convert.ToString(playercardvalue);
-                }
-            }
-        }
-        private void Checkacedealer()
-        {
-            if (dealercardvalue > 21 && dealercard1 == "Ace")
-            {
-                dealercardvalue -= 10;
-                DealerScore.Text = Convert.ToString(dealercardvalue);
-            }
-        }
+        //private void Checkaceplayer()
+        //{
+        //    string ace = "Ace";
+        //    bool doesitcontainace = playercard1.Contains(ace);
+        //    bool doesitcontainace2 = playercard2.Contains(ace);
+
+        //    if (doesitcontainace)
+        //    {
+        //        playercardvalue -= 10;
+        //        PlayerScore.Text = Convert.ToString(playercardvalue);
+        //    }
+        //    else if (doesitcontainace2)
+        //    {
+        //        playercardvalue -= 10;
+        //        PlayerScore.Text = Convert.ToString(playercardvalue);
+        //    }
+        //}
+        //private void Checkacedealer()
+        //{
+        //   string ace = "Ace";
+        //    bool doesitcontainace = dealercard1.Contains(ace);
+        //    //bool doesitcontainace2 = dealercard2.Contains(ace);
+
+        //    if (doesitcontainace)
+        //    {
+        //        dealercardvalue -= 10;
+        //        DealerScore.Text = Convert.ToString(dealercardvalue);
+        //    }
+        //    //else if (doesitcontainace2)
+        //    //{
+        //    //    playercardvalue -= 10;
+        //    //    DealerScore.Text = Convert.ToString(dealercardvalue);
+        //    //}
+        //}
         private void Resetclient()
         {
             dealercardvalue = 0;
@@ -267,7 +283,7 @@ namespace Blackjackkwadraaloef
             PlayerScore.Text = "0";
             Result.Text = "Started";
             Result.Foreground = Brushes.Black;
-        }
+        } 
     }
 }
 
