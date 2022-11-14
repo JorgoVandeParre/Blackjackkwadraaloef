@@ -59,7 +59,7 @@
             Margin="20"
             Name="HitButton"
             Grid.Row="2" Grid.Column="3" Click="HitButton_Click"
-            
+            Visibility="Collapsed"
             >
             Hit
         </Button>
@@ -67,7 +67,7 @@
             Margin="20"
             Name="StandButton"
             Grid.Row="2" Grid.Column="1" Click="StandButton_Click"
-            
+            Visibility="Collapsed"
             >
             Stand
         </Button>
@@ -83,7 +83,7 @@
             Margin="20"
             Name="SplitButton"
             Grid.Row="3" Grid.Column="0"
-            
+            Visibility="Collapsed"
             >
             Split
         </Button>
@@ -91,6 +91,7 @@
             Margin="20"
             Name="DoubleButton"
             Grid.Row="4" Grid.Column="0"
+            Visibility="Collapsed"
             >
             Double Down
         </Button>
@@ -111,6 +112,16 @@
             HorizontalAlignment="Center"
             >
             0
+        </TextBlock>
+        <TextBlock
+            Margin="10"
+            Name="Result"
+            Grid.Row="2" Grid.Column="4"
+            FontSize="38"
+            HorizontalAlignment="Center"
+            Visibility="Collapsed"
+            >
+            Started
         </TextBlock>
 
 
