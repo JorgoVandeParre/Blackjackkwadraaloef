@@ -38,7 +38,7 @@ namespace Blackjackkwadraaloef
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
             int playercardvalue1;
-            playercard1 = Randomcard(out playercardvalue1);
+            playercard1 = Randomcard(true, out playercardvalue1);
             playercardvalue += playercardvalue1;
             PlayerScore.Text = Convert.ToString(playercardvalue);
             PlayerCards.Text += $"\n{playercard1}";
@@ -70,9 +70,9 @@ namespace Blackjackkwadraaloef
             int playercardvalue1;
             int playercardvalue2;
             int dealercardvalue1;
-            playercard1 = Randomcard(out playercardvalue1);
-            playercard2 = Randomcard(out playercardvalue2);
-            dealercard1 = Randomcard(out dealercardvalue1);
+            playercard1 = Randomcard(true, out playercardvalue1);
+            playercard2 = Randomcard(true, out playercardvalue2);
+            dealercard1 = Randomcard(true, out dealercardvalue1);
             //Checkaceplayer();
             //Checkacedealer();
             playercardvalue = playercardvalue1 + playercardvalue2;
@@ -89,7 +89,7 @@ namespace Blackjackkwadraaloef
             do
             {
                 int dealercardvalue1;
-                dealercard1 = Randomcard(out dealercardvalue1);
+                dealercard1 = Randomcard(true, out dealercardvalue1);
                 dealercardvalue += dealercardvalue1;
                 DealerScore.Text = Convert.ToString(dealercardvalue);
                 DealerCards.Text += $"\n{dealercard1}";
@@ -124,7 +124,7 @@ namespace Blackjackkwadraaloef
             }
             
         }
-        private string Randomcard(out int Cardvalue)
+        private string Randomcard(bool isplayer, out int Cardvalue)
         {
             int getal = rnd.Next(1, 5);
 
