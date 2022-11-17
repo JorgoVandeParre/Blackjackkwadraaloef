@@ -124,6 +124,113 @@
             Started
         </TextBlock>
 
+        <Grid
+            Grid.Row="3" Grid.Column="0"
+            Visibility="Visible"
+            Name="secondgrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button
+                Margin="5"
+                Name="plusten"
+                Grid.Row="0" Grid.Column="0" Click="plusten_Click"
+                >
+                +10
+            </Button>
+            <Button
+                Margin="5"
+                Name="plusfifty"
+                Grid.Row="0" Grid.Column="1" Click="plusfifty_Click"
+                >
+                +50
+            </Button>
+            <Button
+                Margin="5"
+                Name="plushundred"
+                Grid.Row="0" Grid.Column="2" Click="plushundred_Click"
+                >
+                +100
+            </Button>
+            <Button
+                Margin="5"
+                Name="minusten"
+                Grid.Row="1" Grid.Column="0" Click="minusten_Click"
+                >
+                -10
+            </Button>
+            <Button
+                Margin="5,5,5,5"
+                Name="minusfifty"
+                Grid.Row="1" Grid.Column="1" Click="minusfifty_Click"
+                >
+                -50
+            </Button>
+            <Button
+                Margin="5"
+                Name="minushundred"
+                Grid.Row="1" Grid.Column="2" Click="minushundred_Click"
+                >
+                -100
+            </Button>
+
+        </Grid>
+        <Grid
+            Grid.Row="4" Grid.Column="0"
+            Visibility="Visible"
+            Name="thirdgrid"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label
+                Margin="5"
+                FontSize="18"
+                >
+                Money available :
+            </Label>
+            <TextBox
+                Margin="5"
+                Name="availablemoney"
+                Grid.Row="1"
+                FontSize="18"
+                >
+                1000
+            </TextBox>
+        </Grid>
+
+        <TextBlock
+            Margin="10"
+            Name="Wager"
+            Grid.Row="2" Grid.Column="0"
+            FontSize="38"
+            Visibility="Visible"
+            TextAlignment="Center"
+            >
+            Wager :
+        </TextBlock>
+        <TextBox
+            Margin="20"
+            Name="Moneybox"
+            Grid.Row="2" Grid.Column="1"
+            FontSize="20"
+            Visibility="Visible"
+            >
+            0
+        </TextBox>
+
 
 
     </Grid>

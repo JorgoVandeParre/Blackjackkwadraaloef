@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -27,6 +28,8 @@ namespace Blackjackkwadraaloef
             Resetclient();
         }
 
+        int availmoney = 1000;
+        int moneywagered;
         int dealercardvalue;
         int playercardvalue;
         string playercard1;
@@ -34,7 +37,6 @@ namespace Blackjackkwadraaloef
         string dealercard1;
         string name;
         Random rnd = new Random();
-        bool isplayer = true;
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
             int playercardvalue1;
@@ -55,17 +57,16 @@ namespace Blackjackkwadraaloef
         {
             Resetclient();
             PlayButton.Visibility = Visibility.Collapsed;
-            if (HitButton.Visibility == Visibility.Collapsed && StandButton.Visibility == Visibility.Collapsed && SplitButton.Visibility == Visibility.Collapsed && DoubleButton.Visibility == Visibility.Collapsed)
-            {
-                HitButton.Visibility = Visibility.Visible;
-                StandButton.Visibility = Visibility.Visible;
-                SplitButton.Visibility = Visibility.Visible;
-                DoubleButton.Visibility = Visibility.Visible; 
-            }
-            if (Result.Visibility == Visibility.Collapsed)
-            {
-                Result.Visibility = Visibility.Visible;
-            }
+            HitButton.Visibility = Visibility.Visible;
+            StandButton.Visibility = Visibility.Visible;
+            SplitButton.Visibility = Visibility.Visible;
+            DoubleButton.Visibility = Visibility.Visible;
+            Result.Visibility = Visibility.Visible;
+            secondgrid.Visibility = Visibility.Collapsed;
+            thirdgrid.Visibility = Visibility.Collapsed;
+            Moneybox.Visibility = Visibility.Collapsed;
+            Wager.Visibility = Visibility.Collapsed;
+
 
             int playercardvalue1;
             int playercardvalue2;
@@ -213,9 +214,17 @@ namespace Blackjackkwadraaloef
         SplitButton.Visibility = Visibility.Collapsed;
         DoubleButton.Visibility = Visibility.Collapsed;
         PlayButton.Visibility = Visibility.Visible;
+            secondgrid.Visibility = Visibility.Visible;
+            thirdgrid.Visibility = Visibility.Visible;
+            Moneybox.Visibility = Visibility.Visible;
+            Wager.Visibility = Visibility.Visible;
 
+            moneywagered *= 2;
+            availmoney += moneywagered;
+            availablemoney.Text = availmoney.ToString();
+            moneywagered = 0;
 
-    }
+        }
         private void Lose()
         {
             Result.Foreground = Brushes.Red;
@@ -225,6 +234,15 @@ namespace Blackjackkwadraaloef
             SplitButton.Visibility = Visibility.Collapsed;
             DoubleButton.Visibility = Visibility.Collapsed;
             PlayButton.Visibility = Visibility.Visible;
+            secondgrid.Visibility = Visibility.Visible;
+            thirdgrid.Visibility = Visibility.Visible;
+            Moneybox.Visibility = Visibility.Visible;
+            Wager.Visibility = Visibility.Visible;
+
+            
+            availmoney -= moneywagered;
+            availablemoney.Text = availmoney.ToString();
+            moneywagered = 0;
         }
         private void Push()
         {
@@ -235,6 +253,12 @@ namespace Blackjackkwadraaloef
             SplitButton.Visibility = Visibility.Collapsed;
             DoubleButton.Visibility = Visibility.Collapsed;
             PlayButton.Visibility = Visibility.Visible;
+            secondgrid.Visibility = Visibility.Visible;
+            thirdgrid.Visibility = Visibility.Visible;
+            Moneybox.Visibility = Visibility.Visible;
+            Wager.Visibility = Visibility.Visible;
+
+            moneywagered = 0;
         }
         //private void Checkaceplayer()
         //{
@@ -283,7 +307,93 @@ namespace Blackjackkwadraaloef
             PlayerScore.Text = "0";
             Result.Text = "Started";
             Result.Foreground = Brushes.Black;
-        } 
+            secondgrid.Visibility = Visibility.Visible;
+            thirdgrid.Visibility = Visibility.Visible;
+            Moneybox.Visibility = Visibility.Visible;
+            Wager.Visibility = Visibility.Visible;
+            PlayButton.Visibility = Visibility.Visible;
+            HitButton.Visibility = Visibility.Collapsed;
+            DoubleButton.Visibility = Visibility.Collapsed;
+            SplitButton.Visibility = Visibility.Collapsed;
+            StandButton.Visibility = Visibility.Collapsed;
+        }
+
+        private bool CheckMoney()
+        {
+            availablemoney.Text = Convert.ToString(availmoney);
+            if (moneywagered >= availmoney)
+            {
+                MessageBox.Show("Do not exceed available money", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                moneywagered = 0;
+                Moneybox.Text = Convert.ToString(moneywagered);
+                return false;
+            }
+            else if (moneywagered < 0)
+            {
+                MessageBox.Show("Money wagered has to be above 0", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                moneywagered = 0;
+                Moneybox.Text = Convert.ToString(moneywagered);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void plushundred_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckMoney())
+            {
+                moneywagered += 100;
+                Moneybox.Text = Convert.ToString(moneywagered);
+            }
+        }
+
+        private void minushundred_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckMoney())
+            {
+                moneywagered -= 100;
+                Moneybox.Text = Convert.ToString(moneywagered);
+            }
+        }
+
+        private void plusfifty_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckMoney())
+            {
+                moneywagered += 50;
+                Moneybox.Text = Convert.ToString(moneywagered);
+            }
+        }
+
+        private void minusfifty_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckMoney())
+            {
+                moneywagered -= 50;
+                Moneybox.Text = Convert.ToString(moneywagered);
+            }
+        }
+
+        private void plusten_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckMoney())
+            {
+                moneywagered += 10;
+                Moneybox.Text = Convert.ToString(moneywagered);
+            }
+        }
+
+        private void minusten_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckMoney())
+            {
+                moneywagered -= 10;
+                Moneybox.Text = Convert.ToString(moneywagered);
+            }
+        }
     }
 }
 
