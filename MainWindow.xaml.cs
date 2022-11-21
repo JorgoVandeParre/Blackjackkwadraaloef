@@ -28,15 +28,15 @@ namespace Blackjackkwadraaloef
             Resetclient();
         }
 
-        int availmoney = 1000;
-        int moneywagered;
-        int dealercardvalue;
-        int playercardvalue;
-        string playercard1;
-        string playercard2;
-        string dealercard1;
-        string name;
-        Random rnd = new Random();
+        private int availmoney = 1000;
+        private int moneywagered;
+        private int dealercardvalue;
+        private int playercardvalue;
+        private string playercard1;
+        private string playercard2;
+        private string dealercard1;
+        private string name;
+        private Random rnd = new Random();
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
             int playercardvalue1;
