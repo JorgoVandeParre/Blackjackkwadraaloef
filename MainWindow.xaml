@@ -42,20 +42,23 @@
             Background="Gray" 
             >
         </TextBox>
-        <TextBlock
+        <Viewbox Stretch="Uniform">
+            <TextBlock
             Margin="10"
             Grid.Row="0" Grid.Column="0"
             FontSize="44"
             >
             Dealer
         </TextBlock>
-        <TextBlock
+        </Viewbox>
+        <Viewbox Grid.Row="4" Grid.Column="5" Stretch="Uniform">
+            <TextBlock
             Margin="10"
-            Grid.Row="4" Grid.Column="5"
             FontSize="44"
             >
             Player
         </TextBlock>
+        </Viewbox>
         <Button
             Margin="20"
             Name="HitButton"
@@ -98,15 +101,16 @@
             >
             Double Down
         </Button>
-        <TextBlock
+        <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform">
+            <TextBlock
             Margin="10"
             Name="DealerScore"
-            Grid.Row="1" Grid.Column="0"
             FontSize="44"
             HorizontalAlignment="Center"
             >
             0
         </TextBlock>
+        </Viewbox>
 
         <Grid
             Grid.Row="3" Grid.Column="5"
@@ -119,7 +123,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
+            <Viewbox Grid.Column="1" Stretch="Uniform">
             <TextBlock
             Margin="10"
             Name="PlayerScore1"
@@ -129,7 +133,9 @@
             >
             0
             </TextBlock>
-            <TextBlock
+            </Viewbox>
+            <Viewbox Stretch="Uniform">
+                <TextBlock
             Margin="10"
             Name="PlayerScore2"
             FontSize="44"
@@ -137,28 +143,31 @@
             >
             0
             </TextBlock>
+            </Viewbox>
 
         </Grid>
-        
-        <TextBlock
+        <Viewbox Grid.Row="3" Grid.Column="5" Stretch="Uniform">
+            <TextBlock
             Margin="10"
             Name="PlayerScore"
-            Grid.Row="3" Grid.Column="5"
             FontSize="44"
             HorizontalAlignment="Center"
             >
             0
         </TextBlock>
-        <TextBlock
+        </Viewbox>
+        <Viewbox Grid.Row="2" Grid.Column="5" Stretch="Uniform">
+            <TextBlock
             Margin="10"
             Name="Result"
-            Grid.Row="2" Grid.Column="5"
+            
             FontSize="38"
             HorizontalAlignment="Center"
             Visibility="Collapsed"
             >
             Started
         </TextBlock>
+        </Viewbox>
 
         <Grid
             Grid.Row="3" Grid.Column="0"
@@ -230,13 +239,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
-            <Label
+            <Viewbox Stretch="Uniform">
+                <Label
                 Margin="5"
                 FontSize="18"
                 >
                 Money available :
             </Label>
+            </Viewbox>
             <TextBox
                 Margin="5"
                 Name="availablemoney"
@@ -247,17 +257,19 @@
                 100
             </TextBox>
         </Grid>
-
-        <TextBlock
+        <Viewbox Grid.Row="2" Grid.Column="0" Stretch="Uniform">
+            <TextBlock
             Margin="10"
             Name="Wager"
-            Grid.Row="2" Grid.Column="0"
+            
             FontSize="38"
             Visibility="Visible"
             TextAlignment="Center"
             >
             Wager :
         </TextBlock>
+        </Viewbox>
+        
         <TextBox
             Margin="20"
             Name="Moneybox"

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Blackjackkwadraaloef
 {
@@ -30,29 +32,33 @@ namespace Blackjackkwadraaloef
         }
 
         private int availmoney = 100;
+        private int playeraces = 1;
+        private int dealeraces = 1;
         private int moneywagered;
         private int dealercardvalue;
         private int playercardvalue;
-        private string playercard1;
-        private string playercard2;
-        private string dealercard1;
+        private string playercard1 = "empty";
+        private string playercard2 = "empty";
+        private string playercard3 = "empty";
+        private string dealercard1 = "empty";
+        private string dealercard2 = "empty";
         private string name;
-        bool isplayer = true;
         private Random rnd = new Random();
-
+        private DispatcherTimer onesecondtimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1)};
 
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
-            int playercardvalue1;
-            playercard1 = Randomcard(isplayer, out playercardvalue1);
-            playercardvalue += playercardvalue1;
+            int playercardvalue3;
+            playercard3 = Randomcard(true, out playercardvalue3);
+            playercardvalue += playercardvalue3;
             PlayerScore.Text = Convert.ToString(playercardvalue);
-            PlayerCards.Text += $"\n{playercard1}";
+            PlayerCards.Text += $"\n{playercard3}";
 
-            //Checkaceplayer();
+            Checkaceplayer();
 
             if (playercardvalue > 21)
             {
+   
                 Lose();
             }
             
@@ -83,11 +89,17 @@ namespace Blackjackkwadraaloef
             int playercardvalue1;
             int playercardvalue2;
             int dealercardvalue1;
-            playercard1 = Randomcard(isplayer, out playercardvalue1);
-            playercard2 = Randomcard(isplayer, out playercardvalue2);
-            dealercard1 = Randomcard(isplayer, out dealercardvalue1);
-            //Checkaceplayer();
-            //Checkacedealer();
+
+            onesecondtimer.Start();
+            
+            playercard1 = Randomcard(true, out playercardvalue1);
+            playercard2 = Randomcard(true, out playercardvalue2);
+            onesecondtimer.Stop();
+
+
+            dealercard1 = Randomcard(false, out dealercardvalue1);
+            Checkaceplayer();
+            Checkacedealer();
             playercardvalue = playercardvalue1 + playercardvalue2;
             dealercardvalue = dealercardvalue1;
             PlayerScore.Text = Convert.ToString(playercardvalue);
@@ -105,15 +117,15 @@ namespace Blackjackkwadraaloef
         {
             do
             {
-                int dealercardvalue1;
-                dealercard1 = Randomcard(isplayer, out dealercardvalue1);
-                dealercardvalue += dealercardvalue1;
+                int dealercardvalue2;
+                dealercard2 = Randomcard(false, out dealercardvalue2);
+                dealercardvalue += dealercardvalue2;
                 DealerScore.Text = Convert.ToString(dealercardvalue);
-                DealerCards.Text += $"\n{dealercard1}";
+                DealerCards.Text += $"\n{dealercard2}";
 
             } while (dealercardvalue <= 17);
 
-            //Checkacedealer();
+            Checkacedealer();
 
             if (dealercardvalue == 21 && playercardvalue == 21)
             {
@@ -170,7 +182,15 @@ namespace Blackjackkwadraaloef
             {
                 case 1:
                     name = "Ace of ";
-                    Cardvalue = 1;
+                    Cardvalue = 11;
+                    if (isplayer == true)
+                    {
+                        playeraces++;
+                    }
+                    else
+                    {
+                        dealeraces++;
+                    }
                     break;
                 case 10:
                     name = "Jack of ";
@@ -218,6 +238,8 @@ namespace Blackjackkwadraaloef
                     break;
              
             }
+
+
             return name + CardSuit;
         }
         private void Win()
@@ -302,48 +324,33 @@ namespace Blackjackkwadraaloef
 
             moneywagered = 0;
         }
-
-        //private void Checkaceplayer()
-        //{
-        //    string ace = "Ace";
-        //    bool doesitcontainace = playercard1.Contains(ace);
-        //    bool doesitcontainace2 = playercard2.Contains(ace);
-
-        //    if (doesitcontainace)
-        //    {
-        //        playercardvalue -= 10;
-        //        PlayerScore.Text = Convert.ToString(playercardvalue);
-        //    }
-        //    else if (doesitcontainace2)
-        //    {
-        //        playercardvalue -= 10;
-        //        PlayerScore.Text = Convert.ToString(playercardvalue);
-        //    }
-        //}
-        //private void Checkacedealer()
-        //{
-        //   string ace = "Ace";
-        //    bool doesitcontainace = dealercard1.Contains(ace);
-        //    //bool doesitcontainace2 = dealercard2.Contains(ace);
-
-        //    if (doesitcontainace)
-        //    {
-        //        dealercardvalue -= 10;
-        //        DealerScore.Text = Convert.ToString(dealercardvalue);
-        //    }
-        //    //else if (doesitcontainace2)
-        //    //{
-        //    //    playercardvalue -= 10;
-        //    //    DealerScore.Text = Convert.ToString(dealercardvalue);
-        //    //}
-        //}
+        private void Checkaceplayer()
+        {
+            
+            if (playeraces > 1 && playercardvalue > 21)
+            {
+                playercardvalue -= 10;
+                PlayerScore.Text = Convert.ToString(playercardvalue);
+                playeraces--;
+            }
+        }
+        private void Checkacedealer()
+        {
+            if (dealeraces > 1 && dealercardvalue > 21)
+            {
+                dealercardvalue -= 10;
+                DealerScore.Text = Convert.ToString(dealercardvalue);
+            } 
+        }
         private void Resetclient()
         {
             dealercardvalue = 0;
             playercardvalue = 0;
             playercard1 = "0";
             playercard2 = "0";
+            playercard3 = "empty";
             dealercard1 = "0";
+            dealercard2 = "empty";
             PlayerCards.Text = "";
             DealerCards.Text = "";
             DealerScore.Text = "0";
@@ -368,7 +375,6 @@ namespace Blackjackkwadraaloef
             split2.Visibility = Visibility.Collapsed;
             Fourthgrid.Visibility = Visibility.Collapsed;
         }
-
         private bool CheckMoney()
         {
             availablemoney.Text = Convert.ToString(availmoney);
@@ -392,7 +398,6 @@ namespace Blackjackkwadraaloef
                 return true;
             }
         }
-
         private void plushundred_Click(object sender, RoutedEventArgs e)
         {
             moneywagered += 100;
@@ -404,7 +409,6 @@ namespace Blackjackkwadraaloef
 
             Moneybox.Text = Convert.ToString(moneywagered);
         }
-
         private void minushundred_Click(object sender, RoutedEventArgs e)
         {
             moneywagered -= 100;
@@ -416,7 +420,6 @@ namespace Blackjackkwadraaloef
 
             Moneybox.Text = Convert.ToString(moneywagered);
         }
-
         private void plusfifty_Click(object sender, RoutedEventArgs e)
         {
             moneywagered += 50;
@@ -428,7 +431,6 @@ namespace Blackjackkwadraaloef
 
             Moneybox.Text = Convert.ToString(moneywagered);
         }
-
         private void minusfifty_Click(object sender, RoutedEventArgs e)
         {
             moneywagered -= 50;
@@ -440,7 +442,6 @@ namespace Blackjackkwadraaloef
 
             Moneybox.Text = Convert.ToString(moneywagered);
         }
-
         private void plusten_Click(object sender, RoutedEventArgs e)
         {
             moneywagered += 10;
@@ -452,7 +453,6 @@ namespace Blackjackkwadraaloef
 
             Moneybox.Text = Convert.ToString(moneywagered);
         }
-
         private void minusten_Click(object sender, RoutedEventArgs e)
         {
             moneywagered -= 10;
@@ -464,7 +464,6 @@ namespace Blackjackkwadraaloef
 
             Moneybox.Text = Convert.ToString(moneywagered);
         }
-
         private void DoubleButton_Click(object sender, RoutedEventArgs e)
         {
             
@@ -472,10 +471,12 @@ namespace Blackjackkwadraaloef
             moneywagered *= 2;
 
             int playercardvalue1;
-            playercard1 = Randomcard(isplayer, out playercardvalue1);
+            playercard1 = Randomcard(true, out playercardvalue1);
             playercardvalue += playercardvalue1;
             PlayerScore.Text = Convert.ToString(playercardvalue);
             PlayerCards.Text += $"\n{playercard1}";
+
+            Checkaceplayer();
 
             if (playercardvalue > 21)
             {
@@ -485,14 +486,14 @@ namespace Blackjackkwadraaloef
             do
             {
                 int dealercardvalue1;
-                dealercard1 = Randomcard(isplayer, out dealercardvalue1);
+                dealercard1 = Randomcard(false, out dealercardvalue1);
                 dealercardvalue += dealercardvalue1;
                 DealerScore.Text = Convert.ToString(dealercardvalue);
                 DealerCards.Text += $"\n{dealercard1}";
 
             } while (dealercardvalue <= 17);
 
-            //Checkacedealer();
+            Checkacedealer();
 
             if (dealercardvalue == 21 && playercardvalue == 21)
             {
@@ -519,7 +520,6 @@ namespace Blackjackkwadraaloef
                 Push();
             }
         }
-
         private void SplitButton_Click(object sender, RoutedEventArgs e)
         {
             PlayerCards.Visibility = Visibility.Collapsed;
@@ -529,13 +529,19 @@ namespace Blackjackkwadraaloef
             Fourthgrid.Visibility = Visibility.Visible;
             SplitButton.Visibility = Visibility.Collapsed;
             DoubleButton.Visibility = Visibility.Collapsed;
+
+            int tempcardvalue1 = playercardvalue /= 2;
+            int tempcardvalue2 = playercardvalue /= 2;
+            moneywagered *= 2;
             
 
-            moneywagered *= 2;
 
 
         }
+        private void OneSecondDelay()
+        {
 
+        }
         private void newgamebttn_Click(object sender, RoutedEventArgs e)
         {
             Resetclient();
