@@ -30,7 +30,9 @@ namespace Blackjackkwadraaloef
             Resetclient();
             
         }
-
+        int playercardvalue1;
+        int playercardvalue2;
+        int dealercardvalue1;
         private int availmoney = 100;
         private int playeraces = 1;
         private int dealeraces = 1;
@@ -44,7 +46,9 @@ namespace Blackjackkwadraaloef
         private string dealercard2 = "empty";
         private string name;
         private Random rnd = new Random();
-        private DispatcherTimer onesecondtimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1)};
+        DispatcherTimer onesecondtimer = new DispatcherTimer();
+        DispatcherTimer twosecondtimer = new DispatcherTimer();
+        DispatcherTimer threesecondtimer = new DispatcherTimer();
 
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +74,8 @@ namespace Blackjackkwadraaloef
                 return;
             }
 
+            PlayerCards.Text = "";
+            DealerCards.Text = "";
             Result.Foreground = Brushes.Black;
             Result.Text = "Started";
             PlayButton.Visibility = Visibility.Collapsed;
@@ -84,26 +90,20 @@ namespace Blackjackkwadraaloef
             Wager.Visibility = Visibility.Collapsed;
             newgamebttn.Visibility = Visibility.Collapsed;
 
-
-
-            int playercardvalue1;
-            int playercardvalue2;
-            int dealercardvalue1;
-
+            onesecondtimer.Interval = TimeSpan.FromMilliseconds(1000);
+            onesecondtimer.Tick += GiveCard_Tick;
             onesecondtimer.Start();
+            twosecondtimer.Interval = TimeSpan.FromMilliseconds(2000);
+            twosecondtimer.Tick += GiveCard2_Tick;
+            twosecondtimer.Start();
+            threesecondtimer.Interval = TimeSpan.FromMilliseconds(3000);
+            threesecondtimer.Tick += GiveCard3_Tick;
+            threesecondtimer.Start();
             
-            playercard1 = Randomcard(true, out playercardvalue1);
-            playercard2 = Randomcard(true, out playercardvalue2);
-            onesecondtimer.Stop();
-
-
-            dealercard1 = Randomcard(false, out dealercardvalue1);
             Checkaceplayer();
             Checkacedealer();
-            playercardvalue = playercardvalue1 + playercardvalue2;
+
             dealercardvalue = dealercardvalue1;
-            PlayerScore.Text = Convert.ToString(playercardvalue);
-            PlayerCards.Text = $"{playercard1}\n{playercard2}";
             DealerScore.Text = Convert.ToString(dealercardvalue1);
             DealerCards.Text = dealercard1;
 
@@ -112,6 +112,32 @@ namespace Blackjackkwadraaloef
                 SplitButton.IsEnabled = true;
             }
             
+        }
+        private void GiveCard_Tick(object sender, EventArgs e)
+        {
+            playercard1 = Randomcard(true, out playercardvalue1);            
+            PlayerScore.Text = Convert.ToString(playercardvalue1);
+            PlayerCards.Text = $"{playercard1}";
+            onesecondtimer.Stop();
+        }
+        private void GiveCard2_Tick(object sender, EventArgs e)
+        {
+            playercard2 = Randomcard(true, out playercardvalue2);            
+            PlayerScore.Text = Convert.ToString(playercardvalue1 + playercardvalue2);
+            PlayerCards.Text = $"{playercard1}\n{playercard2}";
+            playercardvalue = playercardvalue1 + playercardvalue2;
+            twosecondtimer.Stop();
+
+        }
+        private void GiveCard3_Tick(object sender, EventArgs e)
+        {
+            dealercard1 = Randomcard(false, out dealercardvalue1);
+            dealercardvalue = dealercardvalue1;
+            DealerScore.Text = Convert.ToString(dealercardvalue1);
+            DealerCards.Text = dealercard1;
+            threesecondtimer.Stop();
+
+
         }
         private void StandButton_Click(object sender, RoutedEventArgs e)
         {
@@ -251,17 +277,17 @@ namespace Blackjackkwadraaloef
         SplitButton.Visibility = Visibility.Collapsed;
         DoubleButton.Visibility = Visibility.Collapsed;
         PlayButton.Visibility = Visibility.Visible;
-            secondgrid.Visibility = Visibility.Visible;
-            thirdgrid.Visibility = Visibility.Visible;
-            Moneybox.Visibility = Visibility.Visible;
-            Wager.Visibility = Visibility.Visible;
-            newgamebttn.Visibility = Visibility.Visible;
-            Moneybox.Text = "0";
-
-            moneywagered *= 2;
-            availmoney += moneywagered;
-            availablemoney.Text = availmoney.ToString();
-            moneywagered = 0;
+        secondgrid.Visibility = Visibility.Visible;
+        thirdgrid.Visibility = Visibility.Visible;
+        Moneybox.Visibility = Visibility.Visible;
+        Wager.Visibility = Visibility.Visible;
+        newgamebttn.Visibility = Visibility.Visible;
+        Moneybox.Text = "0";
+         
+        moneywagered *= 2;
+        availmoney += moneywagered;
+        availablemoney.Text = availmoney.ToString();
+        moneywagered = 0;
 
            
 
@@ -281,13 +307,14 @@ namespace Blackjackkwadraaloef
             Wager.Visibility = Visibility.Visible;
             newgamebttn.Visibility = Visibility.Visible;
             Moneybox.Text = "0";
+            
 
 
             availmoney -= moneywagered;
             availablemoney.Text = availmoney.ToString();
             moneywagered = 0;
 
-            if (availmoney == 0)
+            if (availmoney <= 0)
             {
                 MessageBox.Show("You went bankrupt!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 secondgrid.Visibility = Visibility.Collapsed;
@@ -321,6 +348,7 @@ namespace Blackjackkwadraaloef
             Wager.Visibility = Visibility.Visible;
             newgamebttn.Visibility = Visibility.Visible;
             Moneybox.Text = "0";
+            
 
             moneywagered = 0;
         }
@@ -346,11 +374,13 @@ namespace Blackjackkwadraaloef
         {
             dealercardvalue = 0;
             playercardvalue = 0;
-            playercard1 = "0";
-            playercard2 = "0";
-            playercard3 = "empty";
-            dealercard1 = "0";
-            dealercard2 = "empty";
+            playeraces = 1;
+            dealeraces = 1;
+            playercard1 = "";
+            playercard2 = "";
+            playercard3 = "";
+            dealercard1 = "";
+            dealercard2 = "";
             PlayerCards.Text = "";
             DealerCards.Text = "";
             DealerScore.Text = "0";
@@ -374,6 +404,10 @@ namespace Blackjackkwadraaloef
             split1.Visibility = Visibility.Collapsed;
             split2.Visibility = Visibility.Collapsed;
             Fourthgrid.Visibility = Visibility.Collapsed;
+            HitsplitButton.Visibility = Visibility.Collapsed;
+            HitsplitsecondButton.Visibility = Visibility.Collapsed;
+            StandsplitButton.Visibility = Visibility.Collapsed;
+            StandsplitsecondButton.Visibility = Visibility.Collapsed;
         }
         private bool CheckMoney()
         {
@@ -529,22 +563,66 @@ namespace Blackjackkwadraaloef
             Fourthgrid.Visibility = Visibility.Visible;
             SplitButton.Visibility = Visibility.Collapsed;
             DoubleButton.Visibility = Visibility.Collapsed;
+            HitButton.Visibility = Visibility.Collapsed;
+            StandButton.Visibility = Visibility.Collapsed;
+            HitsplitButton.Visibility = Visibility.Visible;
+            StandsplitButton.Visibility = Visibility.Visible;
+            split1.IsEnabled = true;
 
-            int tempcardvalue1 = playercardvalue /= 2;
-            int tempcardvalue2 = playercardvalue /= 2;
             moneywagered *= 2;
+
+            PlayerScore1.Text = Convert.ToString(playercardvalue1);
+            PlayerScore2.Text = Convert.ToString(playercardvalue2);
+
+            split1.Text = playercard1;
+            split2.Text = playercard2;
             
 
 
 
         }
-        private void OneSecondDelay()
-        {
-
-        }
         private void newgamebttn_Click(object sender, RoutedEventArgs e)
         {
             Resetclient();
+        }
+
+        private void HitsplitButton_Click(object sender, RoutedEventArgs e)
+        {
+            split1.IsEnabled = false;
+            split2.IsEnabled = true;
+            HitsplitButton.Visibility = Visibility.Collapsed;
+            HitsplitsecondButton.Visibility = Visibility.Visible;
+            StandsplitButton.Visibility = Visibility.Collapsed;
+            StandsplitsecondButton.Visibility = Visibility.Visible;
+
+            int playercardvalue3;
+            playercard3 = Randomcard(true, out playercardvalue3);
+            playercardvalue += playercardvalue3;
+            PlayerScore1.Text = Convert.ToString(playercardvalue);
+            split1.Text += $"\n{playercard3}";
+
+            Checkaceplayer();
+
+            if (playercardvalue > 21)
+            {
+
+                Lose();
+            }
+        }
+
+        private void HitsplitsecondButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StandsplitButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StandsplitsecondButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

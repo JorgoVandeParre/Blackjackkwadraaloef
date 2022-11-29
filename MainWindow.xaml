@@ -290,6 +290,7 @@
             Grid.ColumnSpan="2" Grid.RowSpan="2"
             Visibility="Collapsed"
             IsReadOnly="True"
+            IsEnabled="False"
             >
             
         </TextBox>
@@ -302,6 +303,7 @@
             Grid.ColumnSpan="2" Grid.RowSpan="2"
             Visibility="Collapsed"
             IsReadOnly="True"
+            IsEnabled="False"
             >
 
         </TextBox>
@@ -316,8 +318,40 @@
             >
             New Game
         </Button>
-
+        <Button
+            Margin="20"
+            Name="HitsplitButton"
+            Grid.Row="2" Grid.Column="4" Click="HitsplitButton_Click"
+            Visibility="Collapsed"
+            >
+            Hit
+        </Button>
+        <Button
+            Margin="20"
+            Name="HitsplitsecondButton"
+            Grid.Row="2" Grid.Column="4" Click="HitsplitsecondButton_Click"
+            Visibility="Collapsed"
+            >
+            Hit
+        </Button>
+        <Button
+            Margin="20"
+            Name="StandsplitButton"
+            Grid.Row="2" Grid.Column="1" Click="StandsplitButton_Click"
+            Visibility="Collapsed"
+            >
+            Stand
+        </Button>
+        <Button
+            Margin="20"
+            Name="StandsplitsecondButton"
+            Grid.Row="2" Grid.Column="1" Click="StandsplitsecondButton_Click"
+            Visibility="Collapsed"
+            >
+            Stand
+        </Button>
 
 
     </Grid>
+    
 </Window>
