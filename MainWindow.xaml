@@ -261,7 +261,6 @@
             <TextBlock
             Margin="10"
             Name="Wager"
-            
             FontSize="38"
             Visibility="Visible"
             TextAlignment="Center"
@@ -308,12 +307,10 @@
 
         </TextBox>
 
-
         <Button
             Margin="20"
             Name="newgamebttn"
-            Grid.Row="2"
-            Grid.Column="4"
+            Grid.Row="2" Grid.Column="4"
             Visibility="Visible" Click="newgamebttn_Click"
             >
             New Game
@@ -350,7 +347,26 @@
             >
             Stand
         </Button>
+        <Viewbox Grid.Row="5" Grid.Column="1" Stretch="Uniform">
+            <TextBlock
+                Margin="20"
+                Name="splitresult1"
+                Visibility="Collapsed"
+                FontSize="36"
+                >
+                
+            </TextBlock>
+        </Viewbox>
+        <Viewbox Grid.Row="5" Grid.Column="4" Stretch="Uniform">
+            <TextBlock
+                Margin="20"
+                Name="splitresult2"
+                Visibility="Collapsed"
+                FontSize="36"
+                >
 
+            </TextBlock>
+        </Viewbox>
 
     </Grid>
     
