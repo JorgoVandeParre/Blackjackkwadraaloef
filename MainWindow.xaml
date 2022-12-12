@@ -6,125 +6,133 @@
         xmlns:local="clr-namespace:Blackjackkwadraaloef"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="DarkRed">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBox
+    <DockPanel>
+        <Grid Background="DarkRed" DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox
             Margin="10"
             Name="DealerCards"
             Grid.Row="0" Grid.Column="1"
             Grid.RowSpan="2"
-            Grid.ColumnSpan="4"
+            Grid.ColumnSpan="3"
             IsReadOnly="True"
             Background="Gray"
             >
-        </TextBox>
-        <TextBox
+            </TextBox>
+            <TextBox
             Margin="10"
             Name="PlayerCards"
             Grid.Row="3" Grid.Column="1"
             Grid.RowSpan="2"
-            Grid.ColumnSpan="4"
+            Grid.ColumnSpan="3"
             IsReadOnly="True"
             Background="Gray" 
             >
-        </TextBox>
-        <Viewbox Stretch="Uniform">
-            <TextBlock
+            </TextBox>
+            <Image Grid.Column="4" Grid.RowSpan="2" Margin="20" Source="/Kaarten/Naamloos.png" />
+            <Image Grid.Column="4" Grid.RowSpan="2" Grid.Row="3" Margin="20" Source="/Kaarten/Naamloos.png" />
+            <Image Grid.Column="5" Grid.RowSpan="2" Margin="20" Source="/Kaarten/Naamloos.png" />
+            <Viewbox  Grid.Column="5" Grid.RowSpan="2" Margin="2 2 0 0" >
+                <Label FontSize="20" Name="decknumber">52</Label>
+            </Viewbox>
+            
+            <Viewbox Stretch="Uniform">
+                <TextBlock
             Margin="10"
             Grid.Row="0" Grid.Column="0"
             FontSize="44"
             >
             Dealer
-        </TextBlock>
-        </Viewbox>
-        <Viewbox Grid.Row="4" Grid.Column="5" Stretch="Uniform">
-            <TextBlock
+                </TextBlock>
+            </Viewbox>
+            <Viewbox Grid.Row="4" Grid.Column="5" Stretch="Uniform">
+                <TextBlock
             Margin="10"
             FontSize="44"
             >
             Player
-        </TextBlock>
-        </Viewbox>
-        <Button
+                </TextBlock>
+            </Viewbox>
+            <Button
             Margin="20"
             Name="HitButton"
             Grid.Row="2" Grid.Column="4" Click="HitButton_Click"
             Visibility="Collapsed"
             >
-            Hit
-        </Button>
-        <Button
+                Hit
+            </Button>
+            <Button
             Margin="20"
             Name="StandButton"
             Grid.Row="2" Grid.Column="1" Click="StandButton_Click"
             Visibility="Collapsed"
             >
-            Stand
-        </Button>
-        <Button
+                Stand
+            </Button>
+            <Button
             Margin="20"
             Name="PlayButton"
             Grid.Row="2" Grid.Column="2" Click="PlayButton_Click"
            Grid.ColumnSpan="2"
             >
-            Play
-        </Button>
-        <Button
+                Play
+            </Button>
+            <Button
             Margin="20"
             Name="SplitButton"
             Grid.Row="3" Grid.Column="0"
             Visibility="Collapsed"
             Click="SplitButton_Click"
             >
-            Split
-        </Button>
-        <Button
+                Split
+            </Button>
+            <Button
             Margin="20"
             Name="DoubleButton"
             Grid.Row="4" Grid.Column="0"
             Visibility="Collapsed"
             Click="DoubleButton_Click"
             >
-            Double Down
-        </Button>
-        <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform">
-            <TextBlock
+                Double Down
+            </Button>
+            <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform">
+                <TextBlock
             Margin="10"
             Name="DealerScore"
             FontSize="44"
             HorizontalAlignment="Center"
             >
             0
-        </TextBlock>
-        </Viewbox>
+                </TextBlock>
+            </Viewbox>
 
-        <Grid
+            <Grid
             Grid.Row="3" Grid.Column="5"
             Visibility="Collapsed"
-            Name="Fourthgrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Viewbox Grid.Column="1" Stretch="Uniform">
-            <TextBlock
+            Name="FourthGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Column="1" Stretch="Uniform">
+                    <TextBlock
             Margin="10"
             Name="PlayerScore1"
             Grid.Column="1"
@@ -132,32 +140,32 @@
             HorizontalAlignment="Center"
             >
             0
-            </TextBlock>
-            </Viewbox>
-            <Viewbox Stretch="Uniform">
-                <TextBlock
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform">
+                    <TextBlock
             Margin="10"
             Name="PlayerScore2"
             FontSize="44"
             HorizontalAlignment="Center"
             >
             0
-            </TextBlock>
-            </Viewbox>
+                    </TextBlock>
+                </Viewbox>
 
-        </Grid>
-        <Viewbox Grid.Row="3" Grid.Column="5" Stretch="Uniform">
-            <TextBlock
+            </Grid>
+            <Viewbox Grid.Row="3" Grid.Column="5" Stretch="Uniform">
+                <TextBlock
             Margin="10"
             Name="PlayerScore"
             FontSize="44"
             HorizontalAlignment="Center"
             >
             0
-        </TextBlock>
-        </Viewbox>
-        <Viewbox Grid.Row="2" Grid.Column="5" Stretch="Uniform">
-            <TextBlock
+                </TextBlock>
+            </Viewbox>
+            <Viewbox Grid.Row="2" Grid.Column="5" Stretch="Uniform">
+                <TextBlock
             Margin="10"
             Name="Result"
             
@@ -166,99 +174,99 @@
             Visibility="Collapsed"
             >
             Started
-        </TextBlock>
-        </Viewbox>
+                </TextBlock>
+            </Viewbox>
 
-        <Grid
+            <Grid
             Grid.Row="3" Grid.Column="0"
             Visibility="Visible"
-            Name="secondgrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            Name="SecondGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-            <Button
+                <Button
                 Margin="5"
                 Name="plusten"
-                Grid.Row="0" Grid.Column="0" Click="plusten_Click"
+                Grid.Row="0" Grid.Column="0" Click="PlusTen_Click"
                 >
-                +10
-            </Button>
-            <Button
+                    +10
+                </Button>
+                <Button
                 Margin="5"
                 Name="plusfifty"
-                Grid.Row="0" Grid.Column="1" Click="plusfifty_Click"
+                Grid.Row="0" Grid.Column="1" Click="PlusFifty_Click"
                 >
-                +50
-            </Button>
-            <Button
+                    +50
+                </Button>
+                <Button
                 Margin="5"
                 Name="plushundred"
-                Grid.Row="0" Grid.Column="2" Click="plushundred_Click"
+                Grid.Row="0" Grid.Column="2" Click="PlusHundred_Click"
                 >
-                +100
-            </Button>
-            <Button
+                    +100
+                </Button>
+                <Button
                 Margin="5"
                 Name="minusten"
-                Grid.Row="1" Grid.Column="0" Click="minusten_Click"
+                Grid.Row="1" Grid.Column="0" Click="MinusTen_Click"
                 >
-                -10
-            </Button>
-            <Button
+                    -10
+                </Button>
+                <Button
                 Margin="5,5,5,5"
                 Name="minusfifty"
-                Grid.Row="1" Grid.Column="1" Click="minusfifty_Click"
+                Grid.Row="1" Grid.Column="1" Click="MinusFifty_Click"
                 >
-                -50
-            </Button>
-            <Button
+                    -50
+                </Button>
+                <Button
                 Margin="5"
                 Name="minushundred"
-                Grid.Row="1" Grid.Column="2" Click="minushundred_Click"
+                Grid.Row="1" Grid.Column="2" Click="MinusHundred_Click"
                 >
-                -100
-            </Button>
+                    -100
+                </Button>
 
-        </Grid>
-        <Grid
+            </Grid>
+            <Grid
             Grid.Row="4" Grid.Column="0"
             Visibility="Visible"
-            Name="thirdgrid"
+            Name="ThirdGrid"
             >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Viewbox Stretch="Uniform">
-                <Label
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Viewbox Stretch="Uniform">
+                    <Label
                 Margin="5"
                 FontSize="18"
                 >
-                Money available :
-            </Label>
-            </Viewbox>
-            <TextBox
+                        Money available :
+                    </Label>
+                </Viewbox>
+                <TextBox
                 Margin="5"
                 Name="availablemoney"
                 Grid.Row="1"
                 FontSize="18"
                 IsReadOnly="True"
                 >
-                100
-            </TextBox>
-        </Grid>
-        <Viewbox Grid.Row="2" Grid.Column="0" Stretch="Uniform">
-            <TextBlock
+                    100
+                </TextBox>
+            </Grid>
+            <Viewbox Grid.Row="2" Grid.Column="0" Stretch="Uniform">
+                <TextBlock
             Margin="10"
             Name="Wager"
             FontSize="38"
@@ -266,108 +274,121 @@
             TextAlignment="Center"
             >
             Wager :
-        </TextBlock>
-        </Viewbox>
-        
-        <TextBox
+                </TextBlock>
+            </Viewbox>
+
+            <TextBox
             Margin="20"
-            Name="Moneybox"
+            Name="MoneyBox"
             Grid.Row="2" Grid.Column="1"
             FontSize="20"
             Visibility="Visible"
             IsReadOnly="True"
             >
-            0
-        </TextBox>
+                0
+            </TextBox>
 
-        <TextBox
+            <TextBox
             Margin="10"
             Background="Gray"
-            Name="split1"
+            Name="Split1"
             Grid.Row="3"
             Grid.Column="1"
-            Grid.ColumnSpan="2" Grid.RowSpan="2"
+            Grid.ColumnSpan="1" Grid.RowSpan="2"
             Visibility="Collapsed"
             IsReadOnly="True"
             IsEnabled="False"
             >
-            
-        </TextBox>
-        <TextBox
+
+            </TextBox>
+            <TextBox
             Margin="10"
             Background="Gray"
-            Name="split2"
+            Name="Split2"
             Grid.Row="3"
-            Grid.Column="3"
+            Grid.Column="2"
             Grid.ColumnSpan="2" Grid.RowSpan="2"
             Visibility="Collapsed"
             IsReadOnly="True"
             IsEnabled="False"
             >
 
-        </TextBox>
+            </TextBox>
 
-        <Button
+            <Button
             Margin="20"
-            Name="newgamebttn"
+            Name="NewGameBTTN"
             Grid.Row="2" Grid.Column="4"
-            Visibility="Visible" Click="newgamebttn_Click"
+            Visibility="Visible" Click="NewGameBTTN_Click"
             >
-            New Game
-        </Button>
-        <Button
+                New Game
+            </Button>
+            <Button
             Margin="20"
             Name="HitsplitButton"
-            Grid.Row="2" Grid.Column="4" Click="HitsplitButton_Click"
+            Grid.Row="2" Grid.Column="4" Click="HitSplitButton_Click"
             Visibility="Collapsed"
             >
-            Hit
-        </Button>
-        <Button
+                Hit
+            </Button>
+            <Button
             Margin="20"
             Name="HitsplitsecondButton"
-            Grid.Row="2" Grid.Column="4" Click="HitsplitsecondButton_Click"
+            Grid.Row="2" Grid.Column="4" Click="HitSplitSecondButton_Click"
             Visibility="Collapsed"
             >
-            Hit
-        </Button>
-        <Button
+                Hit
+            </Button>
+            <Button
             Margin="20"
             Name="StandsplitButton"
-            Grid.Row="2" Grid.Column="1" Click="StandsplitButton_Click"
+            Grid.Row="2" Grid.Column="1" Click="StandSplitButton_Click"
             Visibility="Collapsed"
             >
-            Stand
-        </Button>
-        <Button
+                Stand
+            </Button>
+            <Button
             Margin="20"
             Name="StandsplitsecondButton"
-            Grid.Row="2" Grid.Column="1" Click="StandsplitsecondButton_Click"
+            Grid.Row="2" Grid.Column="1" Click="StandSplitSecondButton_Click"
             Visibility="Collapsed"
             >
-            Stand
-        </Button>
-        <Viewbox Grid.Row="5" Grid.Column="1" Stretch="Uniform">
-            <TextBlock
+                Stand
+            </Button>
+            <Viewbox Grid.Row="5" Grid.Column="1" Stretch="Uniform">
+                <TextBlock
                 Margin="20"
-                Name="splitresult1"
-                Visibility="Collapsed"
-                FontSize="36"
-                >
-                
-            </TextBlock>
-        </Viewbox>
-        <Viewbox Grid.Row="5" Grid.Column="4" Stretch="Uniform">
-            <TextBlock
-                Margin="20"
-                Name="splitresult2"
+                Name="SplitResult1"
                 Visibility="Collapsed"
                 FontSize="36"
                 >
 
-            </TextBlock>
-        </Viewbox>
+                </TextBlock>
+            </Viewbox>
+            <Viewbox Grid.Row="3" Grid.Column="4" Stretch="Uniform" Height="87" Grid.RowSpan="2" VerticalAlignment="Bottom">
+                <TextBlock
+                Margin="20"
+                Name="SplitResult2"
+                Visibility="Collapsed"
+                FontSize="36"
+                >
 
-    </Grid>
-    
+                </TextBlock>
+            </Viewbox>
+
+        </Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Margin="0 0 0 0" Grid.Column="2" Name="LiveTime" Content="%TIME%">
+            </Label>
+            <Label Name="lastplayedgame">laatst gespeelde spel</Label>
+            <Label Grid.Column="1">Historiek</Label>
+            
+      
+        </Grid>
+    </DockPanel>
 </Window>
