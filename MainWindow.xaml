@@ -5,9 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blackjackkwadraaloef"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" MinHeight="400" MinWidth="600">
     <DockPanel>
-        <Grid Background="DarkRed" DockPanel.Dock="Top">
+        <Grid DockPanel.Dock="Bottom" Height="25">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Column="2">
+                <Label Margin="0 0 0 0"  Name="LiveTime" Content="%TIME%"></Label>
+            </Viewbox>
+            <Viewbox>
+                <TextBlock Name="lastPlayedGame" Margin="5"></TextBlock>
+            </Viewbox>
+            <ComboBox Grid.Column="1" Name="TenLastPlayedGames" IsReadOnly="True"></ComboBox>
+        </Grid>
+        <Grid Background="DarkRed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -43,11 +57,11 @@
             Background="Gray" 
             >
             </TextBox>
-            <Image Grid.Column="4" Grid.RowSpan="2" Margin="20" Source="/Kaarten/Naamloos.png" />
-            <Image Grid.Column="4" Grid.RowSpan="2" Grid.Row="3" Margin="20" Source="/Kaarten/Naamloos.png" />
+            <Image Grid.Column="4" Grid.RowSpan="2" Margin="20" Name="DealerImage" Source="/Kaarten/Naamloos.png" />
+            <Image Grid.Column="4" Grid.RowSpan="2" Grid.Row="3" Margin="20" Name="PlayerImage" Source="/Kaarten/Naamloos.png" />
             <Image Grid.Column="5" Grid.RowSpan="2" Margin="20" Source="/Kaarten/Naamloos.png" />
-            <Viewbox  Grid.Column="5" Grid.RowSpan="2" Margin="2 2 0 0" >
-                <Label FontSize="20" Name="decknumber">52</Label>
+            <Viewbox  Grid.Column="5" Grid.RowSpan="2" Margin="25" >
+                <TextBlock FontSize="20" Name="deckNumber">52</TextBlock>
             </Viewbox>
             
             <Viewbox Stretch="Uniform">
@@ -73,7 +87,9 @@
             Grid.Row="2" Grid.Column="4" Click="HitButton_Click"
             Visibility="Collapsed"
             >
-                Hit
+                <Viewbox>
+                    <Label>Hit</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -81,15 +97,19 @@
             Grid.Row="2" Grid.Column="1" Click="StandButton_Click"
             Visibility="Collapsed"
             >
-                Stand
+                <Viewbox>
+                    <Label>Stand</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
             Name="PlayButton"
             Grid.Row="2" Grid.Column="2" Click="PlayButton_Click"
-           Grid.ColumnSpan="2"
+            Grid.ColumnSpan="2"
             >
-                Play
+                <Viewbox>
+                    <Label>Play</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -98,7 +118,9 @@
             Visibility="Collapsed"
             Click="SplitButton_Click"
             >
-                Split
+                <Viewbox>
+                    <Label>Split</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -107,7 +129,9 @@
             Visibility="Collapsed"
             Click="DoubleButton_Click"
             >
-                Double Down
+                <Viewbox>
+                    <Label>Double Down</Label>
+                </Viewbox>
             </Button>
             <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform">
                 <TextBlock
@@ -196,42 +220,54 @@
                 Name="plusten"
                 Grid.Row="0" Grid.Column="0" Click="PlusTen_Click"
                 >
-                    +10
+                    <Viewbox>
+                        <Label>+10</Label>
+                    </Viewbox>
                 </Button>
                 <Button
                 Margin="5"
                 Name="plusfifty"
                 Grid.Row="0" Grid.Column="1" Click="PlusFifty_Click"
                 >
-                    +50
+                    <Viewbox>
+                        <Label>+50</Label>
+                    </Viewbox>
                 </Button>
                 <Button
                 Margin="5"
                 Name="plushundred"
                 Grid.Row="0" Grid.Column="2" Click="PlusHundred_Click"
                 >
-                    +100
+                    <Viewbox>
+                        <Label>+100</Label>
+                    </Viewbox>
                 </Button>
                 <Button
                 Margin="5"
                 Name="minusten"
                 Grid.Row="1" Grid.Column="0" Click="MinusTen_Click"
                 >
-                    -10
+                    <Viewbox>
+                        <Label>-10</Label>
+                    </Viewbox>
                 </Button>
                 <Button
                 Margin="5,5,5,5"
                 Name="minusfifty"
                 Grid.Row="1" Grid.Column="1" Click="MinusFifty_Click"
                 >
-                    -50
+                    <Viewbox>
+                        <Label>-50</Label>
+                    </Viewbox>
                 </Button>
                 <Button
                 Margin="5"
                 Name="minushundred"
                 Grid.Row="1" Grid.Column="2" Click="MinusHundred_Click"
                 >
-                    -100
+                    <Viewbox>
+                        <Label>-100</Label>
+                    </Viewbox>
                 </Button>
 
             </Grid>
@@ -321,7 +357,9 @@
             Grid.Row="2" Grid.Column="4"
             Visibility="Visible" Click="NewGameBTTN_Click"
             >
-                New Game
+                <Viewbox>
+                    <Label>New Game</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -329,7 +367,9 @@
             Grid.Row="2" Grid.Column="4" Click="HitSplitButton_Click"
             Visibility="Collapsed"
             >
-                Hit
+                <Viewbox>
+                    <Label>Hit</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -337,7 +377,9 @@
             Grid.Row="2" Grid.Column="4" Click="HitSplitSecondButton_Click"
             Visibility="Collapsed"
             >
-                Hit
+                <Viewbox>
+                    <Label>Hit</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -345,7 +387,9 @@
             Grid.Row="2" Grid.Column="1" Click="StandSplitButton_Click"
             Visibility="Collapsed"
             >
-                Stand
+                <Viewbox>
+                    <Label>Stand</Label>
+                </Viewbox>
             </Button>
             <Button
             Margin="20"
@@ -353,7 +397,9 @@
             Grid.Row="2" Grid.Column="1" Click="StandSplitSecondButton_Click"
             Visibility="Collapsed"
             >
-                Stand
+                <Viewbox>
+                    <Label>Stand</Label>
+                </Viewbox>
             </Button>
             <Viewbox Grid.Row="5" Grid.Column="1" Stretch="Uniform">
                 <TextBlock
@@ -377,18 +423,6 @@
             </Viewbox>
 
         </Grid>
-        <Grid DockPanel.Dock="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Margin="0 0 0 0" Grid.Column="2" Name="LiveTime" Content="%TIME%">
-            </Label>
-            <Label Name="lastplayedgame">laatst gespeelde spel</Label>
-            <Label Grid.Column="1">Historiek</Label>
-            
-      
-        </Grid>
+        
     </DockPanel>
 </Window>
