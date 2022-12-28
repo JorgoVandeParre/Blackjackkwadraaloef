@@ -24,6 +24,13 @@ namespace Blackjackkwadraaloef
     /// </summary>
     public partial class MainWindow : Window
     {
+        // i was not able to finish the split function because i poorly planned and underestimated the effort it took, i still have a half finished version of it if u want to use it
+
+        /// <summary>
+        /// <para>The client resets returning it to its begin state</para>
+        /// <para>All timer tick get made</para>
+        /// <para>The live clock found in app gets made and starts</para>
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -48,42 +55,46 @@ namespace Blackjackkwadraaloef
             timeNow.Tick += Timer_Tick;
             timeNow.Start();
         }
+        /// <summary>
+        /// <para>The Live clock Tick</para>
+        /// </summary>
         private void Timer_Tick(object sender, EventArgs e)
         {
             LiveTime.Content = DateTime.Now.ToString("HH:mm:ss");
         }
 
-        private bool isItPush = false;
-        private bool didPlayerWin;
-        private bool isDoubleDown = false;
-        private bool split1IsPlaying = true;
-        private bool split2IsPlaying = true;
+        private bool isItPush = false; // checks if the result of the game was a push (used for updating the history)
+        private bool didPlayerWin; // checks if player won (used for updating history)
+        private bool isHiddenCard = false; // checks if the card being delt is the hidden card (used in randomcard methode to hide the image)
+        private bool isDoubleDown = false; // gets toggled if player clicks on double down (used to change money wagered)
+        private bool split1IsPlaying = true; // checks which hand is playing at the time in the split function
+        private bool split2IsPlaying = true; // checks which hand is playing at the time in the split function
         private int playerCardValue1;
         private int playerCardValue2;
         private int dealerCardValue1;
         private int dealerCardValue2;
-        private int availMoney = 100;
+        private int availMoney = 100; // money the player has
         private int playerAces = 1;
         private int dealerAces = 1;
-        private int moneyWagered;
+        private int moneyWagered; // how much money the player wagered
         private int dealerCardValue;
         private int playerCardValue;
         private int numberOfCardsInDeck = 52;
-        private int historyUpdator = 1;
+        private int historyUpdator = 1; // counts what round u are playing
         private string playerCard1 = "empty";
         private string playerCard2 = "empty";
         private string playerCard3 = "empty";
         private string dealerCard1 = "empty";
         private string dealerCard2 = "empty";
-        private string plusOrMinus = "";
-        private Random rnd = new Random();
-        private DispatcherTimer oneSecondTimer = new DispatcherTimer();
-        private DispatcherTimer twoSecondTimer = new DispatcherTimer();
-        private DispatcherTimer threeSecondTimer = new DispatcherTimer();
-        private DispatcherTimer fourSecondTimer = new DispatcherTimer();
-        private DispatcherTimer fiveSecondTimer = new DispatcherTimer();
-        private DispatcherTimer standTimer = new DispatcherTimer();
-        private DispatcherTimer showSecondDealerCard = new DispatcherTimer();
+        private string plusOrMinus = ""; // used in the history feature this is determined by isitpush or didplayerwin so the history can output the right symbol
+        private Random rnd = new Random(); 
+        private DispatcherTimer oneSecondTimer = new DispatcherTimer(); // 1 second from play button adds first player card
+        private DispatcherTimer twoSecondTimer = new DispatcherTimer(); // 2 seconds from play button adds second player card
+        private DispatcherTimer threeSecondTimer = new DispatcherTimer(); // 3 seconds from play button adds first dealer card
+        private DispatcherTimer fourSecondTimer = new DispatcherTimer(); // 4 seconds from play button adds second dealer card
+        private DispatcherTimer fiveSecondTimer = new DispatcherTimer(); // 5 seconds from play button adds the option to use split/double down and also checks the aces on the board
+        private DispatcherTimer standTimer = new DispatcherTimer(); // hands out dealer cards untill he gets 17 or higher then shows game result
+        private DispatcherTimer showSecondDealerCard = new DispatcherTimer(); // flips over dealers second card that was still invisible after pressing stand
         private List<string> newDeck = new List<string>(){
                 "Ace of Hearts",
                 "Ace of Spades",
@@ -137,7 +148,7 @@ namespace Blackjackkwadraaloef
                 "Ten of Spades",
                 "Ten of Clubs",
                 "Ten of Diamonds",
-            };
+            }; // makes a new deck used when the list deck becomes empty
         private List<string> deck = new List<string>(){
                 "Ace of Hearts",
                 "Ace of Spades",
@@ -191,7 +202,7 @@ namespace Blackjackkwadraaloef
                 "Ten of Spades",
                 "Ten of Clubs",
                 "Ten of Diamonds",
-            };
+            }; // the deck where all the cards are
         private List<string> history = new List<string>()
         {
             "",
@@ -204,17 +215,21 @@ namespace Blackjackkwadraaloef
             "",
             "",
             "",
-        };
+        }; // the history of past games are in here
 
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
             Hit();
         }
+        /// <summary>
+        /// <para>Firstly checks if the hit is used on split or not then gives 1 card to the player</para>
+        /// </summary>
         private void Hit()
         {
 
             if (PlayerCards.Visibility == Visibility.Visible)
             {
+                
                 int playerCardValue3;
                 playerCard3 = RandomCard(true, out playerCardValue3);
                 playerCardValue += playerCardValue3;
@@ -254,6 +269,7 @@ namespace Blackjackkwadraaloef
                 {
                     Lose();
                 }
+                DoubleButton.IsEnabled = false;
             }
 
         }
@@ -262,12 +278,16 @@ namespace Blackjackkwadraaloef
         {
             Play();
         }
+        /// <summary>
+        /// <para>first it uses checkmoney method to see if the player used a valid amount of money then resets the app to a playable position and starts the ticks for handing out cards</para>
+        /// </summary>
         private void Play()
         {
             if (!CheckMoney())
             {
                 return;
             }
+            
 
             PlayerScore.Text = "0";
             DealerScore.Text = "0";
@@ -296,13 +316,16 @@ namespace Blackjackkwadraaloef
             FourthGrid.Visibility = Visibility.Collapsed;
             PlayerScore.Visibility = Visibility.Visible;
 
-            oneSecondTimer.Start();
-            twoSecondTimer.Start();
-            threeSecondTimer.Start();
-            fourSecondTimer.Start();
-            fiveSecondTimer.Start();
+            oneSecondTimer.Start(); // related to GiveCard_Tick
+            twoSecondTimer.Start(); // related to GiveCard2_Tick
+            threeSecondTimer.Start(); // related to GiveCard3_Tick
+            fourSecondTimer.Start(); // related to GiveCard4_Tick
+            fiveSecondTimer.Start(); // related to Play_Tick
 
         }
+        /// <summary>
+        ///  <para>Gives the player his first card</para>
+        /// </summary>
         private void GiveCard_Tick(object sender, EventArgs e)
         {
             playerCard1 = RandomCard(true, out playerCardValue1);
@@ -310,6 +333,9 @@ namespace Blackjackkwadraaloef
             PlayerCards.Text = $"{playerCard1}";
             oneSecondTimer.Stop();
         }
+        /// <summary>
+        ///  <para>Gives the player his second card</para>
+        /// </summary>
         private void GiveCard2_Tick(object sender, EventArgs e)
         {
             playerCard2 = RandomCard(true, out playerCardValue2);
@@ -319,6 +345,9 @@ namespace Blackjackkwadraaloef
             twoSecondTimer.Stop();
 
         }
+        /// <summary>
+        ///  <para>Gives the dealer his first card</para>
+        /// </summary>
         private void GiveCard3_Tick(object sender, EventArgs e)
         {
             dealerCard1 = RandomCard(false, out dealerCardValue1);
@@ -330,8 +359,12 @@ namespace Blackjackkwadraaloef
 
 
         }
+        /// <summary>
+        ///  <para>Gives the dealer his second card</para>
+        /// </summary>
         private void GiveCard4_Tick(object sender, EventArgs e)
         {
+            isHiddenCard = true;
             dealerCard2 = RandomCard(false, out dealerCardValue2);
             dealerCardValue += dealerCardValue2;
 
@@ -342,6 +375,9 @@ namespace Blackjackkwadraaloef
             DoubleButton.Visibility = Visibility.Visible;
             fourSecondTimer.Stop();
         }
+        /// <summary>
+        ///  <para>Checks for aces and enables split and double down buttons based on cards</para>
+        /// </summary>
         private void Play_Tick(object sender, EventArgs e)
         {
             CheckAcePlayer();
@@ -363,10 +399,13 @@ namespace Blackjackkwadraaloef
         {
             Stand();
         }
+        /// <summary>
+        /// <para>Shows the hidden second dealer card, then it gives the dealer cards until het gets 17 or higher then checks if the player won or lost</para>
+        /// </summary>
         private void Stand()
         {
-            showSecondDealerCard.Start();
-            standTimer.Start();
+            showSecondDealerCard.Start(); // relates to ShowSecondDealerCard_Tick
+            standTimer.Start(); // relates to StandGiveCard_Tick
 
         }
         private void ShowSecondDealerCard_Tick(object sender, EventArgs e)
@@ -375,10 +414,13 @@ namespace Blackjackkwadraaloef
             DealerCards.Text += $"\n{dealerCard2}";
             showSecondDealerCard.Stop();
         }
+        /// <summary>
+        /// <para>it gives the dealer cards until het gets 17 or higher then checks if the player won or lost</para>
+        /// </summary>
         private void StandGiveCard_Tick(object sender, EventArgs e)
         {
 
-            if (!(dealerCardValue <= 17))
+            if (!(dealerCardValue <= 16))
             {
                 if (dealerCardValue == 21 && playerCardValue == 21)
                 {
@@ -418,12 +460,11 @@ namespace Blackjackkwadraaloef
             }
 
         }
-
         /// <summary>
-        /// 
+        /// <para>gives a random card out of the deck</para>
         /// </summary>
-        /// <param name="isPlayer"></param>
-        /// <param name="cardValue"></param>
+        /// <param name="isPlayer">checks if it is the player using this methode or the dealer (usefull for adding aces and updating the image)</param>
+        /// <param name="cardValue">returns the value of the card given so the code knows </param>
         /// <returns></returns>
         private string RandomCard(bool isPlayer, out int cardValue)
         {
@@ -760,18 +801,32 @@ namespace Blackjackkwadraaloef
             }
             else
             {
-                DealerImage.Source = new BitmapImage(new Uri($"/kaarten/{cardType}/{imageName}.svg.png", UriKind.RelativeOrAbsolute));
+                if (isHiddenCard == true)
+                {
+                    DealerImage.Source = new BitmapImage(new Uri($"/kaarten/Naamloos.png", UriKind.RelativeOrAbsolute));
+                    isHiddenCard = false;
+                }
+                else
+                {
+                    DealerImage.Source = new BitmapImage(new Uri($"/kaarten/{cardType}/{imageName}.svg.png", UriKind.RelativeOrAbsolute));
+                }
             }
 
             return card;
 
         }
+        /// <summary>
+        /// <para>firstly uses a method to update isitplusorminus to know what the game result was, after that updates the last played game that displays in the bottom left</para>
+        /// </summary>
         private void InsertLastGameResults()
         {
             CheckGameResultForHistory();
             lastPlayedGame.Foreground = Brushes.Green;
             lastPlayedGame.Text = $"{plusOrMinus}{moneyWagered} / {playerCardValue} / {dealerCardValue}";
         }
+        /// <summary>
+        /// <para>inserts last played game into the history bar found in the bottom middle of the screen</para>
+        /// </summary>
         private void InsertAllGameResults()
         {
             CheckGameResultForHistory();
@@ -785,6 +840,9 @@ namespace Blackjackkwadraaloef
             }
             historyUpdator++;
         }
+        /// <summary>
+        /// <para>updates the plusorminus to determine what symbol gets used in the history</para>
+        /// </summary>
         private void CheckGameResultForHistory()
         {
             if (isItPush == true)
@@ -801,7 +859,9 @@ namespace Blackjackkwadraaloef
                 plusOrMinus = "-";
             }
         }
-
+        /// <summary>
+        /// <para>updates UI and history, also doubles money wagered and adds it to his bank.</para>
+        /// </summary>
         private void Win()
         {
             Result.Foreground = Brushes.Green;
@@ -841,6 +901,9 @@ namespace Blackjackkwadraaloef
 
 
         }
+        /// <summary>
+        /// <para>updates UI and history, also makes the player lose all the money he wagered</para>
+        /// </summary>
         private void Lose()
         {
 
@@ -987,6 +1050,9 @@ namespace Blackjackkwadraaloef
             }
 
         }
+        /// <summary>
+        /// <para>updates UI and history, also gives the money wagered back to the player</para>
+        /// </summary>
         private void Push()
         {
             Result.Foreground = Brushes.Orange;
@@ -1019,6 +1085,9 @@ namespace Blackjackkwadraaloef
             dealerCardValue = 0;
             moneyWagered = 0;
         }
+        /// <summary>
+        /// <para>checks if the player has an ace on the board and if he has gone over 21 then changes the value of that ace if needed</para>
+        /// </summary>
         private void CheckAcePlayer()
         {
             
@@ -1029,6 +1098,9 @@ namespace Blackjackkwadraaloef
                 playerAces--;
             }
         }
+        /// <summary>
+        /// <para>checks if the dealer has an ace on the board and if he has gone over 21 then changes the value of that ace if needed</para>
+        /// </summary>
         private void CheckAceDealer()
         {
             if (dealerAces > 1 && dealerCardValue > 21)
@@ -1037,6 +1109,9 @@ namespace Blackjackkwadraaloef
                 DealerScore.Text = Convert.ToString(dealerCardValue);
             } 
         }
+        /// <summary>
+        /// <para>completely resets the app</para>
+        /// </summary>
         private void ResetClient()
         {
             dealerCardValue = 0;
@@ -1145,6 +1220,9 @@ namespace Blackjackkwadraaloef
             TenLastPlayedGames.Items.Clear();
 
         }
+        /// <summary>
+        /// <para>checks if the player entered a valid amount of money to play the game</para>
+        /// </summary>
         private bool CheckMoney()
         {
             availablemoney.Text = Convert.ToString(availMoney);
@@ -1240,6 +1318,9 @@ namespace Blackjackkwadraaloef
         {
             DoubleDown();
         }
+        /// <summary>
+        /// <para>doubles wagared money then uses hit and stand function</para>
+        /// </summary>
         private void DoubleDown()
         {
             moneyWagered *= 2;
@@ -1247,7 +1328,9 @@ namespace Blackjackkwadraaloef
             Hit();
             Stand();
         }
-
+        /// <summary>
+        /// <para>NOT Finished</para>
+        /// </summary>
         private void SplitButton_Click(object sender, RoutedEventArgs e)
         {
             PlayerCards.Visibility = Visibility.Collapsed;
@@ -1272,6 +1355,9 @@ namespace Blackjackkwadraaloef
             Split2.Text = playerCard1;
 
         }
+        /// <summary>
+        /// <para>NOT Finished</para>
+        /// </summary>
         private void HitSplitButton_Click(object sender, RoutedEventArgs e)
         {
             Hit();
@@ -1285,6 +1371,9 @@ namespace Blackjackkwadraaloef
                 StandsplitsecondButton.Visibility = Visibility.Visible;
             }
         }
+        /// <summary>
+        /// <para>NOT Finished</para>
+        /// </summary>
         private void HitSplitSecondButton_Click(object sender, RoutedEventArgs e)
         {
             Hit();
@@ -1298,6 +1387,9 @@ namespace Blackjackkwadraaloef
                 StandsplitsecondButton.Visibility = Visibility.Collapsed;
             }
         }
+        /// <summary>
+        /// <para>NOT Finished</para>
+        /// </summary>
         private void StandSplitButton_Click(object sender, RoutedEventArgs e)
         {
             if (split2IsPlaying == true)
@@ -1311,6 +1403,9 @@ namespace Blackjackkwadraaloef
             }
             Stand();
         }
+        /// <summary>
+        /// <para>NOT Finished</para>
+        /// </summary>
         private void StandSplitSecondButton_Click(object sender, RoutedEventArgs e)
         {
             if (split1IsPlaying == true)
@@ -1325,6 +1420,9 @@ namespace Blackjackkwadraaloef
             Stand();
         }
 
+        /// <summary>
+        /// <para>resets the client with a button</para>
+        /// </summary>
         private void NewGameBTTN_Click(object sender, RoutedEventArgs e)
         {
             ResetClient();
