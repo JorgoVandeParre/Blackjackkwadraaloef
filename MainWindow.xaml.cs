@@ -876,6 +876,7 @@ namespace Blackjackkwadraaloef
             MoneyBox.Visibility = Visibility.Visible;
             Wager.Visibility = Visibility.Visible;
             NewGameBTTN.Visibility = Visibility.Visible;
+            isDoubleDown = false;
             MoneyBox.Text = "0";
             dealerCardValue1 = 0;
             dealerCardValue2 = 0;
@@ -921,6 +922,7 @@ namespace Blackjackkwadraaloef
                 MoneyBox.Visibility = Visibility.Visible;
                 Wager.Visibility = Visibility.Visible;
                 NewGameBTTN.Visibility = Visibility.Visible;
+                isDoubleDown = false;
                 MoneyBox.Text = "0";
                 dealerCardValue1 = 0;
                 dealerCardValue2 = 0;
@@ -1067,6 +1069,7 @@ namespace Blackjackkwadraaloef
             MoneyBox.Visibility = Visibility.Visible;
             Wager.Visibility = Visibility.Visible;
             NewGameBTTN.Visibility = Visibility.Visible;
+            isDoubleDown = false;
             MoneyBox.Text = "0";
             dealerCardValue1 = 0;
             dealerCardValue2 = 0;
