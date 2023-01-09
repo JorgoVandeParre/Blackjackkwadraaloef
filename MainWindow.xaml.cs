@@ -836,7 +836,8 @@ namespace Blackjackkwadraaloef
             TenLastPlayedGames.Items.Insert(0, lastGame);
             if (history.Count > 10)
             {
-                history.RemoveAt(9);
+                history.RemoveAt(10);
+                TenLastPlayedGames.Items.RemoveAt(10);s
             }
             historyUpdator++;
         }
